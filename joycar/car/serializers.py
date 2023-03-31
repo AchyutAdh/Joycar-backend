@@ -2,10 +2,10 @@ from rest_framework import serializers
 from .models import Car, Auction, Bid
 
 class CarSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Car
-        fields = ('id', 'name', 'model', 'year', 'description', 'price', 'image', 'status', 'user')
-
+        fields = ['id', 'name', 'model', 'year', 'description', 'price', 'image', 'status', 'user']
 
 class AuctionSerializer(serializers.ModelSerializer):
     car = CarSerializer(read_only=True)

@@ -7,12 +7,14 @@ class Car(models.Model):
     year = models.PositiveIntegerField()
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='car/', blank=True, null=True)
+    image = models.TextField()
     status = models.CharField(max_length=50, choices=[('active', 'Active'), ('inactive', 'Inactive'), ('cancelled', 'Cancelled'), ('completed', 'Completed')])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cars')
 
     def __str__(self):
         return self.name
+
+  
 
 
 class Auction(models.Model):
