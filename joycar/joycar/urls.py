@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('car.urls')),
     path('',include('accounts.urls')),
-
+    path('',include('car_price_prediction.urls')),
 ]

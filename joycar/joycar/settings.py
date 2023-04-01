@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'car',
     'django_rest_passwordreset',
+    'car_price_prediction',
 ]
 
 MIDDLEWARE = [
