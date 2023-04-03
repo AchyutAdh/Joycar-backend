@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.db.models import Max
+
 
 class Car(models.Model):
     name = models.CharField(max_length=100)
@@ -16,12 +19,20 @@ class Car(models.Model):
 
   
 
-
 class Auction(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='auctions')
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(default=timezone.now)
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='won_auctions')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.end_time <= timezone.now() and not self.winner:
+            max_bid = Bid.objects.filter(auction=self).aggregate(Max('price'))
+            if max_bid['price__max']:
+                winning_bid = Bid.objects.filter(auction=self, price=max_bid['price__max']).first()
+                self.winner = winning_bid.user
+                self.save(update_fields=['winner'])
 
 
 class Bid(models.Model):
