@@ -69,6 +69,8 @@ class BidCreateAPIView(generics.CreateAPIView):
         auction.price = serializer.validated_data['price']
         auction.save()
 
+        # Serialize the updated auction data and return it in the response
+        serializer = AuctionSerializer(auction)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 

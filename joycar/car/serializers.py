@@ -10,10 +10,11 @@ class CarSerializer(serializers.ModelSerializer):
 class AuctionSerializer(serializers.ModelSerializer):
     car = CarSerializer(read_only=True)
     winner = serializers.StringRelatedField(read_only=True)
+    active_bidder = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Auction
-        fields = ('id', 'car', 'price', 'end_time', 'winner')
+        fields = ('id', 'car', 'price', 'end_time', 'winner', 'active_bidder')
 
 
 
