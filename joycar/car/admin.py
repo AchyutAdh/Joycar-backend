@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Car, Auction, Bid
+from .models import Appointment, Car, Auction, Bid
 
 class AuctionAdmin(admin.ModelAdmin):
     list_display = ('id', 'car', 'price', 'end_time', 'winner')
@@ -16,6 +16,12 @@ class BidAdmin(admin.ModelAdmin):
 
     car_name.short_description = 'Car Name'
 
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'date', 'auction', 'status')
+    list_filter = ('auction', 'status')
+    search_fields = ('auction__car__name', 'auction__car__model')
+
+admin.site.register(Appointment, AppointmentAdmin)
 admin.site.register(Car)
 admin.site.register(Auction, AuctionAdmin)
 admin.site.register(Bid, BidAdmin)

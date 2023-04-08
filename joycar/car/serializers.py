@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Car, Auction, Bid
+from .models import Appointment, Car, Auction, Bid
 
 class CarSerializer(serializers.ModelSerializer):
 
@@ -37,3 +37,8 @@ class BidAllSerializer(serializers.ModelSerializer):
 
     def get_car_name(self, obj):
         return obj.auction.car.name
+    
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = ['id', 'date', 'auction', 'status']

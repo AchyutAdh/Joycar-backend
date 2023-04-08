@@ -1,9 +1,9 @@
 from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import Car, Auction, Bid
+from .models import Appointment, Car, Auction, Bid
 from rest_framework.exceptions import ValidationError
-from .serializers import BidAllSerializer, CarSerializer, AuctionSerializer, BidSerializer
+from .serializers import AppointmentSerializer, BidAllSerializer, CarSerializer, AuctionSerializer, BidSerializer
 from rest_framework.exceptions import NotFound
 
 class CarCreateAPIView(generics.CreateAPIView):
@@ -112,3 +112,7 @@ class UserWonAuctionsAPIView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return Auction.objects.filter(winner_id=user_id)
+    
+class AppointmentCreateView(generics.CreateAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
