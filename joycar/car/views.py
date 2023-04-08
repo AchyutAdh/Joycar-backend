@@ -104,3 +104,11 @@ class BidListAllAPIView(generics.ListAPIView):
     serializer_class = BidAllSerializer
     queryset = Bid.objects.all()
    
+
+class UserWonAuctionsAPIView(generics.ListAPIView):
+    serializer_class = AuctionSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Auction.objects.filter(winner_id=user_id)
