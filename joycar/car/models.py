@@ -54,8 +54,4 @@ class Bid(models.Model):
 class Appointment(models.Model):
     date = models.DateField()
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    status_choices = [
-        ('Active', 'Active'),
-        ('Inactive', 'Inactive'),
-    ]
-    status = models.CharField(max_length=10, choices=status_choices)
+    status = models.CharField(max_length=10, choices=[('active', 'Active'), ('inactive', 'Inactive')], default='inactive')

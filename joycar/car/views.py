@@ -116,3 +116,18 @@ class UserWonAuctionsAPIView(generics.ListAPIView):
 class AppointmentCreateView(generics.CreateAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
+
+
+class AppointmentListAPIView(generics.ListAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
+    permission_classes = [permissions.AllowAny]
+    
+
+class AuctionsByUserAPIView(generics.ListAPIView):
+    serializer_class = AuctionSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Auction.objects.filter(car__user_id=user_id, car__status='active')
